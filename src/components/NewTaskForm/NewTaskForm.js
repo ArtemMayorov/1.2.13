@@ -1,15 +1,16 @@
-import React from "react";
+import React from 'react';
+// import ReactDom from 'react-dom';
+
 
 const NewTaskForm = () => {
     return (
         <input
         className="new-todo" 
         placeholder="What needs to be done?" 
-        autofocus
+        autoFocus
         ></input>
     );
 };
-
 export default NewTaskForm;
 
 

@@ -7,10 +7,34 @@ import './index.css';
 import TaskList from './components/TaskList/TaskList.js';
 
 const App = () => {
+    // const tasks = 
+    // [
+    //     {
+    //     taskText: 'Completed task',
+    //     state: 'completed',
+    //     },
+    //     {
+    //     taskText: 'Editing task',
+    //     state: 'editing',
+    //     },
+    //     {
+    //     taskText: 'Completed task',
+    //     state: 'completed',
+    //     },
+    //     {
+    //     taskText: 'Active task',
+    //     state: 'view',
+    //     },
+    //     {
+    //     taskText: 'Active task',
+    //     state: 'view',
+    //     },
+    // ]    
+    const = ['3 состояния здесь было']
     return (
         <section className='todoapp'>
         <AppHeader/>
-        <TaskList/>
+        <TaskList tasksBody={tasks}/>
         </section>
     );
 };
