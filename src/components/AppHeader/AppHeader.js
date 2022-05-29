@@ -1,0 +1,12 @@
+import React from "react";
+import NewTaskForm from '../NewTaskForm/NewTaskForm.js'
+
+const AppHeader = () => {
+    return (
+        <header className="header">
+            <h1>todos</h1>
+            <NewTaskForm/>
+        </header>
+    );
+};
+export default AppHeader
