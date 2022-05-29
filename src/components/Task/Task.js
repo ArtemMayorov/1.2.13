@@ -1,14 +1,13 @@
 import React from "react";
 
-const Task = ({state}) => {
-
-    if(state === 'editing'){
+const Task = ({task}) => {
+    if(task.state === 'editing'){
         return (
-        <li key={state} className={state}>
+        <li key={task.state } className={task.state }>
         <input className="toggle" type="checkbox"></input>
         <div className="view">
         <label>
-            <span className="description">Completed task</span>
+            <span className="description">{task.taskText}</span>
             <span className="created">created {new Date().toLocaleTimeString()}</span>
         </label>
         <button className="icon icon-edit"></button>
@@ -20,11 +19,11 @@ const Task = ({state}) => {
     };
 
     return (
-        <li key={state} className={state}>
+        <li key={task.state } className={task.state }>
             <input className="toggle" type="checkbox"></input>
             <div className="view">
             <label>
-                <span className="description">Completed task</span>
+                <span className="description">{task.taskText}</span>
                 <span className="created">created {new Date().toLocaleTimeString()}</span>
             </label>
             <button className="icon icon-edit"></button>
