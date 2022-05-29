@@ -13,4 +13,4 @@ const TaskList = ({tasksBody}) => {
     );
     })
 };
-export default TaskList
+export default TaskList;
