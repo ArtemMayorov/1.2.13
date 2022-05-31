@@ -1,5 +1,8 @@
 import React from 'react';
-import ReactDom from 'react-dom';
+// import ReactDom from 'react-dom';
+
+import { createRoot } from 'react-dom/client';
+// import App from  './components/app/App.jsx'
 
 import AppHeader from './components/NewTaskForm/NewTaskForm.js';
 
@@ -11,29 +14,34 @@ const App = () => {
     const tasks = 
     [
         {
-        id:1,
+        id:new Date() + 2,
         taskText: 'Completed task',
         state: 'completed',
         },
         {
-        id:2,
+        id:new Date() + 3,
         taskText: 'Editing task',
         state: 'editing',
         },
         {
-        id:3,
+        id:new Date() + 4,
         taskText: 'Completed task',
         state: 'completed',
         },
         {
-        id:4,
+        id:new Date() + 5,
         taskText: 'Active task',
         state: 'view',
         },
         {
-        id:5,
+        id:new Date() + 6,
         taskText: 'Active task',
         state: 'view',
+        },
+        {
+        id: new Date() + 7,
+        taskText: 'Editing test',
+        state: 'editing',
         },
     ]    
     return (
@@ -44,5 +52,9 @@ const App = () => {
         </section>
     );
 };
-ReactDom.render(<App />, 
-document.getElementById('root'))
+// ReactDom.render(<App />, 
+// document.getElementById('root'))
+
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(<App></App>)
