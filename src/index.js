@@ -7,7 +7,7 @@ import AppHeader from './components/NewTaskForm/NewTaskForm.js';
 import './index.css';
 import TaskList from './components/TaskList/TaskList.js';
 import Footer from './components/footer/footer.js';
-
+import NewTaskForm from './components/NewTaskForm/NewTaskForm.js';
 const App = () => {
     let maxId = 100;
     let [tasks, changeTask ] = useState(
@@ -47,7 +47,6 @@ const App = () => {
    
     
 const deleteItem = (id) => {
-   
     changeTask(( tasks ) => {
         const idx = tasks.findIndex((el) => el.id === id);
         const newTasks = [
@@ -58,13 +57,30 @@ const deleteItem = (id) => {
     } );
 };
 
+const addItem = (text) => {
+    changeTask(( tasks ) => {
+        const newTask = [{
+            id: maxId + 7,
+            taskText: text,
+            state: 'view',
+         }]
+         const newTask2 = [
+            ...newTask,
+             ...tasks,
+         ]
+         return newTask2
+
+    })
+    console.log(text);
+};
+
     return (
         <section className='todoapp'>
-        <AppHeader/>
+        <NewTaskForm
+        onAdd = {addItem}/> 
         <TaskList 
          tasksBody={tasks}
-         onDeleted={deleteItem}
-         />
+         onDeleted={deleteItem}/>
         <Footer/>
         </section>
     );
