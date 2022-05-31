@@ -2,44 +2,53 @@ import React, { useState } from "react";
 
 
 
+const Task = ({task, onDeleted}) => {
 
-function destroyTask() {
-    console.log('destroyTask');
-};
-
-
-const Task = ({task}) => {
-
-
-    let [taskBody, addState] = useState({
-        incomingClass: task.state,
-        description: task.taskText
+    const [state, setState] = useState({
+        done: false
     });
-
-    function editTask(e){
-        // addState({
-        //     incomingClass: 'editing',
-        // })
+    
+    const onMarkComplited = () => {
+        console.log(state.done);
+        setState((state) => {
+            return {
+                done: !state.done
+            };
+        });
     };
+
+    let classNames = task.state
+
+    if(state.done) {
+        classNames = 'completed'
+    }else{
+        classNames = task.state
+    }
+
 
 
     return (
-        <li key={task.id} className={taskBody.incomingClass}>
+        <li key={task.id} className={classNames}>
             <div className="view">
-            <input className="toggle" type="checkbox"></input>
+            <input 
+            onClick={onMarkComplited}
+            className="toggle" 
+            type="checkbox"></input>
             <label>
-                {/* <span className="description">{task.taskText}</span> */}
-                <span className="description">{taskBody.description}</span>
+                <span className="description">{task.taskText}</span>
                 <span className="created">created {new Date().toLocaleTimeString()}</span>
             </label>
-            <button className="icon icon-edit"  onClick={editTask}></button>
-            <button className="icon icon-destroy" onClick={destroyTask}></button>
+            <button className="icon icon-edit"  
+            
+            ></button>
+            <button className="icon icon-destroy"
+            onClick={onDeleted}
+            ></button>
             </div>
-            {taskBody.incomingClass === 'editing'?
-            //  <input type="text" className="edit" value={taskBody.description}></input> : '' }
+            {classNames === 'editing'?
              <input type="text" 
              className="edit" 
-             value={taskBody.description}
+             value={task.taskText}
              >
              </input> : '' }
         </li>

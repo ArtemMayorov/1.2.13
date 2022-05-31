@@ -2,11 +2,14 @@ import React from "react";
 
 import Task from '../Task/Task.js'
 
-const TaskList = ({tasksBody}) => {
-    return tasksBody.map((elem, index) => {
+
+const TaskList = ({tasksBody, onDeleted}) => {
+    return tasksBody.map((elem) => {
         return(
         <ul className="todo-list">
-             <Task task = {elem} />
+             <Task 
+             onDeleted ={()=> onDeleted(elem.id)}
+             task = {elem} />
          </ul>
     );
     })
