@@ -2,36 +2,22 @@ import React, { useState } from "react";
 
 
 
-const Task = ({task, onDeleted}) => {
+const Task = ({task, onDeleted, onMarkComplited}) => {
 
-    const [state, setState] = useState({
-        done: false
-    });
     
-    const onMarkComplited = () => {
-        console.log(state.done);
-        setState((state) => {
-            return {
-                done: !state.done
-            };
-        });
-    };
-
-    let classNames = task.state
-
-    if(state.done) {
-        classNames = 'completed'
-    }else{
-        classNames = task.state
-    }
+    // if(task.done) {
+    //     classNames = 'completed'
+    // }else{
+    //     classNames = task.state
+    // }
 
 
 
     return (
-        <li key={task.id} className={classNames}>
+        <li key={task.id} className={task.done ? 'completed' : task.state}>
             <div className="view">
             <input 
-            onClick={onMarkComplited}
+            onClick={() => onMarkComplited(task.id)}
             className="toggle" 
             type="checkbox"></input>
             <label>
@@ -45,7 +31,7 @@ const Task = ({task, onDeleted}) => {
             onClick={onDeleted}
             ></button>
             </div>
-            {classNames === 'editing'?
+            {task.state === 'editing'?
              <input type="text" 
              className="edit" 
              value={task.taskText}

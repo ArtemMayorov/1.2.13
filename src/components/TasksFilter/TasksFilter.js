@@ -1,18 +1,42 @@
 import React from "react";
 
-const TasksFilter = () => {
+
+
+// const filterToggle = (e) => {
+//     e.target.classList.toggle('selected');
+//   };
+
+// const filterToggle = (e) => {
+//   const filterChildren = [...e.currentTarget.children];
+//   const buttonList = filterChildren.map(el => {
+//      return  el.firstElementChild.className = ''
+//     });
+//     e.target.classList.toggle('selected');
+//   };
+
+const TasksFilter = ({setFilter, filterToggle}) => {
     return (
-      <React.Fragment>
+      <ul 
+      onClick={filterToggle}
+      // onClick={filterToggle}
+      className="filters">
         <li>
-            <button className="selected">All</button>
+            <button 
+            className="selected"
+            onClick={setFilter}
+            >All</button>
         </li>
         <li>
-            <button>Active</button>
+            <button 
+            onClick={setFilter}
+            >Active</button>
         </li>
         <li>
-            <button>Completed</button>
+            <button 
+            onClick={setFilter}
+            >Completed</button>
         </li>
-      </React.Fragment>
+      </ul>
     );
 };
 export default TasksFilter;
