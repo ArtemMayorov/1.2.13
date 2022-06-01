@@ -1,6 +1,19 @@
 import React from "react";
 import TasksFilter from "../TasksFilter/TasksFilter";
-const Footer = ({taskCounter, setFilter, filterToggle, stateFilter, setStateFilter }) => {
+
+
+
+
+
+
+
+
+
+
+
+
+
+const Footer = ({taskCounter, setFilter, filterToggle, clearCompleted }) => {
    
     return (
         <footer className="footer">
@@ -11,7 +24,9 @@ const Footer = ({taskCounter, setFilter, filterToggle, stateFilter, setStateFilt
              filterToggle ={filterToggle}
              />
          </ul>
-         <button className="clear-completed">Clear completed</button>
+         <button 
+         onClick={clearCompleted}
+         className="clear-completed">Clear completed</button>
         </footer>
     );
 };

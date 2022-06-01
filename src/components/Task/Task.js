@@ -4,15 +4,6 @@ import React, { useState } from "react";
 
 const Task = ({task, onDeleted, onMarkComplited}) => {
 
-    
-    // if(task.done) {
-    //     classNames = 'completed'
-    // }else{
-    //     classNames = task.state
-    // }
-
-
-
     return (
         <li key={task.id} className={task.done ? 'completed' : task.state}>
             <div className="view">
@@ -25,7 +16,6 @@ const Task = ({task, onDeleted, onMarkComplited}) => {
                 <span className="created">created {new Date().toLocaleTimeString()}</span>
             </label>
             <button className="icon icon-edit"  
-            
             ></button>
             <button className="icon icon-destroy"
             onClick={onDeleted}

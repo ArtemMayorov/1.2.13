@@ -39,20 +39,14 @@ let [currentTaskList, setTaskList] = useState(tasks);
         setTaskList(tasks)
     },[tasks]);
 
-    // useEffect(()=>{
-    //     changeTask(tasks)
-    // },[currentTaskList]);
-
 const filterToggle = (e) => {
      const filterChildren = [...e.currentTarget.children];
      const buttonList = filterChildren.map(el => {
      return  el.firstElementChild.className = ''
     });
-    // e.target.classList.toggle(stateFilter);
+   
     e.target.classList.toggle('selected');
 };
-
-
 
 const setFilter = (e) => {
 
@@ -72,7 +66,7 @@ const setFilter = (e) => {
         setStateFilter('Completed')
        
     }
-    console.log('stateFilter',stateFilter);
+    
 };
 
 const deleteItem = (id) => {
@@ -111,11 +105,15 @@ const onMarkComplited = (id) => {
         ];
         return newTasks
     })
-  
-    
 };
 
-    
+    const clearCompleted = () => {
+        changeTask(( tasks ) => {
+            const newTasks = tasks.filter((el) => el.done !== true);
+            return newTasks
+        } );
+    };
+
     const taskCounter = tasks.filter(el => el.state !== 'completed' 
     &&  el.done === !true ).length;
 
@@ -135,6 +133,7 @@ const onMarkComplited = (id) => {
          
          />
         <Footer 
+        clearCompleted = {clearCompleted}
         taskCounter={taskCounter}
         setFilter = {setFilter}
         filterToggle={filterToggle}
