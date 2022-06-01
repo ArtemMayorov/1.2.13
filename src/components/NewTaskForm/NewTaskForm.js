@@ -3,15 +3,23 @@ import React, {useState} from 'react';
 
 
 
-const NewTaskForm = ({onAdd}) => {
+const NewTaskForm = ({onAdd, stateFilter, setStateFilter}) => {
       
     let [label, setLabel] = useState('');
+    console.log("label",label );
     const chageInput = (e) => {
         setLabel(e.target.value)
     };
     const KeyUp = (e) => {
+
+ 
         if(e.keyCode == 13){
+            console.log('setStateFilter', stateFilter);
             e.preventDefault()
+
+            if(stateFilter === 'Completed') {
+
+            }
             onAdd(label)
             setLabel('')
         };

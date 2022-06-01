@@ -11,7 +11,7 @@ import NewTaskForm from './components/NewTaskForm/NewTaskForm.js';
 import TasksFilter from './components/TasksFilter/TasksFilter';
 const App = () => {
 
-    let maxId = Math.random() * 1000;
+    let maxId = Math.floor(Math.random() * 1000);
 
     const createItem = (text) => {
         return {
@@ -32,7 +32,7 @@ const App = () => {
         ]    
     );
 
-
+let [stateFilter, setStateFilter] = useState('All');
 let [currentTaskList, setTaskList] = useState(tasks);
 
     useEffect(()=>{
@@ -44,12 +44,14 @@ let [currentTaskList, setTaskList] = useState(tasks);
     // },[currentTaskList]);
 
 const filterToggle = (e) => {
-    const filterChildren = [...e.currentTarget.children];
+     const filterChildren = [...e.currentTarget.children];
      const buttonList = filterChildren.map(el => {
      return  el.firstElementChild.className = ''
     });
+    // e.target.classList.toggle(stateFilter);
     e.target.classList.toggle('selected');
 };
+
 
 
 const setFilter = (e) => {
@@ -57,16 +59,20 @@ const setFilter = (e) => {
     const evenContent = e.target.textContent;
     if(evenContent === 'All'){
         setTaskList(tasks)
+        setStateFilter('All')
 
     }else if (evenContent === 'Active'){
         let newTasks = [...tasks].filter(el => el.done === false)
         setTaskList(newTasks)
-
+        setStateFilter('Active')
+  
     }else if (evenContent === 'Completed'){
         let newTasks = [...tasks].filter(el => el.done === true)
         setTaskList(newTasks)
+        setStateFilter('Completed')
+       
     }
-
+    console.log('stateFilter',stateFilter);
 };
 
 const deleteItem = (id) => {
@@ -117,8 +123,12 @@ const onMarkComplited = (id) => {
         <section className='todoapp'>
         <AppHeader/>
         <NewTaskForm
-        onAdd = {addItem}/> 
-        <TaskList 
+        onAdd = {addItem}
+        
+        setStateFilter = {setStateFilter}
+        /> 
+        <TaskList
+        stateFilter = {stateFilter}
          tasksBody={currentTaskList}
          onDeleted={deleteItem}
          onMarkComplited = {onMarkComplited}

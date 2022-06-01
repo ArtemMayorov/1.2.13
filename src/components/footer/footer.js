@@ -1,6 +1,7 @@
 import React from "react";
 import TasksFilter from "../TasksFilter/TasksFilter";
-const Footer = ({taskCounter, setFilter, filterToggle}) => {
+const Footer = ({taskCounter, setFilter, filterToggle, stateFilter, setStateFilter }) => {
+   
     return (
         <footer className="footer">
          <span className="todo-count">{taskCounter} items left</span>
