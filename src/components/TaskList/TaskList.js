@@ -3,16 +3,19 @@ import React from "react";
 import Task from '../Task/Task.js'
 
 
-const TaskList = ({tasksBody, onDeleted, onMarkComplited, stateFilter }) => {
+const TaskList = ({tasksBody, onDeleted, onMarkComplited, stateFilter, editTask, onAdd, taskNewText }) => {
     
     return tasksBody.map((elem) => {
-        
+        console.log('TaskList onAdd ', onAdd);
         if(stateFilter === 'Completed') {
 
             if(elem.done === true) {
                 return (
                     <ul className="todo-list">
                     <Task 
+                    onAdd = {onAdd}
+                    taskNewText={taskNewText}
+                    editTask = {editTask}
                     onMarkComplited={onMarkComplited}
                     onDeleted ={()=> onDeleted(elem.id)}
                     task = {elem} />
@@ -24,6 +27,9 @@ const TaskList = ({tasksBody, onDeleted, onMarkComplited, stateFilter }) => {
                     return (
                         <ul className="todo-list">
                         <Task 
+                        taskNewText={taskNewText}
+                        onAdd = {onAdd}
+                        editTask = {editTask}
                         onMarkComplited={onMarkComplited}
                         onDeleted ={()=> onDeleted(elem.id)}
                         task = {elem} />
@@ -35,6 +41,9 @@ const TaskList = ({tasksBody, onDeleted, onMarkComplited, stateFilter }) => {
                     return (
                         <ul className="todo-list">
                         <Task 
+                        taskNewText={taskNewText}
+                        onAdd = {onAdd}
+                        editTask = {editTask}
                         onMarkComplited={onMarkComplited}
                         onDeleted ={()=> onDeleted(elem.id)}
                         task = {elem} />

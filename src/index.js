@@ -23,7 +23,7 @@ const App = () => {
     };
 
     
-    let [tasks, changeTask ] = useState(
+    const [tasks, changeTask ] = useState(
         [
             createItem('task 1'),
             createItem('task 2'),
@@ -114,6 +114,42 @@ const onMarkComplited = (id) => {
         } );
     };
 
+    const editTask = (taskText, id) => {
+
+        changeTask((tasks) => {   
+            const idx = tasks.findIndex((el) => el.id === id);
+            const oldItem = tasks[idx]
+            const newTask = {...oldItem, taskText: taskText, state: 'editing'};
+            const newTasks = [
+                ...tasks.slice(0, idx),
+                newTask,
+                ...tasks.slice(idx + 1)
+            ];
+            return newTasks
+        })
+    }
+
+    const taskNewText = (newText, id) =>{
+        console.log('newText text ', newText);
+        console.log('newText id ', id);
+        changeTask((tasks) => {
+        
+            const idx = tasks.findIndex((el) => el.id === id);
+            console.log("idxxxxxxxx", idx);
+            const oldItem = tasks[idx]
+            const newTask = {...oldItem, taskText: newText,  state: 'view' };
+            const newTasks = [
+                ...tasks.slice(0, idx),
+                newTask,
+                ...tasks.slice(idx + 1)
+            ];
+            return newTasks
+
+        })
+        // console.log('taskNewText');
+    }
+    
+
     const taskCounter = tasks.filter(el => el.state !== 'completed' 
     &&  el.done === !true ).length;
 
@@ -126,7 +162,11 @@ const onMarkComplited = (id) => {
         setStateFilter = {setStateFilter}
         /> 
         <TaskList
-        stateFilter = {stateFilter}
+         onAdd = {addItem}
+        //  keyUpEdit = {keyUpEdit}
+         editTask = {editTask}  
+         taskNewText={taskNewText}
+         stateFilter = {stateFilter}
          tasksBody={currentTaskList}
          onDeleted={deleteItem}
          onMarkComplited = {onMarkComplited}
