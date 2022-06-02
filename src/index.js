@@ -155,7 +155,9 @@ const onMarkComplited = (id) => {
 
     return (
         <section className='todoapp'>
-        <AppHeader/>
+         <header className="header">
+            <h1>todos</h1>
+            </header>
         <NewTaskForm
         onAdd = {addItem}
         

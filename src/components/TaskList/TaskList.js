@@ -1,10 +1,10 @@
 import React from "react";
-
+import PropTypes from 'prop-types'
 import Task from '../Task/Task.js'
 
 
 const TaskList = ({tasksBody, onDeleted, onMarkComplited, stateFilter, editTask, onAdd, taskNewText }) => {
-    
+  
     return tasksBody.map((elem) => {
         console.log('TaskList onAdd ', onAdd);
         if(stateFilter === 'Completed') {
@@ -52,41 +52,33 @@ const TaskList = ({tasksBody, onDeleted, onMarkComplited, stateFilter, editTask,
                 }
                    
             }
-        
-       
-        
-    //     return(
-    //     <ul className="todo-list">
-    //          <Task 
-    //          onMarkComplited={onMarkComplited}
-    //          onDeleted ={()=> onDeleted(elem.id)}
-    //          task = {elem} />
-    //      </ul>
-    // );
     })
 };
-//     return tasksBody.map((elem) => {
-//         if(stateFilter === 'Completed') {
-//             if(elem.done === true) {
-//                 return (
-//                     <ul className="todo-list">
-//                     <Task 
-//                     onMarkComplited={onMarkComplited}
-//                     onDeleted ={()=> onDeleted(elem.id)}
-//                     task = {elem} />
-//                 </ul>
-//                 )
-//             }
-//         } 
+TaskList.propTypes = {
+    tasksBody: PropTypes.shape({
+        done: PropTypes.bool,
+        id: PropTypes.number,
+        taskText: PropTypes.string,
+        state: PropTypes.string,
+    }),
+    onDeleted: PropTypes.func,
+    onMarkComplited:PropTypes.func,
+    editTask:PropTypes.func,
+    taskNewText: PropTypes.string,
+    onAdd:PropTypes.func,
+};
+TaskList.defaultProps = {
+    tasksBody: {
+        done: true,
+        id: null,
+        taskText: 'null',
+        state: null,
+    },
+    onDeleted: null,
+    onMarkComplited:null,
+    editTask: null,
+    taskNewText: null,
+    onAdd: null,
 
-//         return(
-//         <ul className="todo-list">
-//              <Task 
-//              onMarkComplited={onMarkComplited}
-//              onDeleted ={()=> onDeleted(elem.id)}
-//              task = {elem} />
-//          </ul>
-//     );
-//     })
-// };
+  };
 export default TaskList;

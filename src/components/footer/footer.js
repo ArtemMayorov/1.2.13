@@ -1,7 +1,7 @@
 import React from "react";
 import TasksFilter from "../TasksFilter/TasksFilter";
 
-
+import PropTypes from 'prop-types'
 
 
 
@@ -31,4 +31,16 @@ const Footer = ({taskCounter, setFilter, filterToggle, clearCompleted }) => {
     );
 };
 
+Footer.propTypes = {
+    taskCounter: PropTypes.number,
+    setFilter: PropTypes.func,
+    filterToggle:PropTypes.func,
+    clearCompleted:PropTypes.func,
+};
+Footer.defaultProps = {
+    taskCounter: 0,
+    setFilter: null,
+    filterToggle:null,
+    clearCompleted:null,
+};
 export default Footer

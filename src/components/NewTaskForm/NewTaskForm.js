@@ -1,24 +1,22 @@
 import React, {useState} from 'react';
 // import ReactDom from 'react-dom';
+import PropTypes from 'prop-types'
 
 
-
-const NewTaskForm = ({onAdd, stateFilter, setStateFilter}) => {
+const NewTaskForm = ({onAdd, stateFilter }) => {
       
     let [label, setLabel] = useState('');
     console.log("label",label );
     const chageInput = (e) => {
         setLabel(e.target.value)
     };
+    
     const KeyUp = (e) => {
 
  
         if(e.keyCode == 13){
-            console.log('setStateFilter', stateFilter);
             e.preventDefault()
-
             if(stateFilter === 'Completed') {
-
             }
             onAdd(label)
             setLabel('')
@@ -35,6 +33,14 @@ const NewTaskForm = ({onAdd, stateFilter, setStateFilter}) => {
         value={label}
         ></input>
     );
+};
+NewTaskForm.propTypes = {
+    onAdd: PropTypes.func,
+    stateFilter: PropTypes.func,
+};
+NewTaskForm.defaultProps = {
+    onAdd: null,
+    stateFilter: null,
 };
 export default NewTaskForm;
 
