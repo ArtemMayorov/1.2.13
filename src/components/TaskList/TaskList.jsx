@@ -1,17 +1,21 @@
 import React from "react";
 import PropTypes from 'prop-types'
-import Task from '../Task/Task.js'
+import Task from '../Task/Task.jsx'
 
 
 const TaskList = ({tasksBody, onDeleted, onMarkComplited, stateFilter, editTask, onAdd, taskNewText }) => {
-  
+    
     return tasksBody.map((elem) => {
-        console.log('TaskList onAdd ', onAdd);
+
+    
+
         if(stateFilter === 'Completed') {
 
             if(elem.done === true) {
                 return (
-                    <ul className="todo-list">
+                    <ul 
+                    key={elem.id}
+                    className="todo-list">
                     <Task 
                     onAdd = {onAdd}
                     taskNewText={taskNewText}
@@ -25,7 +29,9 @@ const TaskList = ({tasksBody, onDeleted, onMarkComplited, stateFilter, editTask,
         }
             if(stateFilter == 'All') {
                     return (
-                        <ul className="todo-list">
+                        <ul
+                        key={elem.id}
+                         className="todo-list">
                         <Task 
                         taskNewText={taskNewText}
                         onAdd = {onAdd}
@@ -39,7 +45,9 @@ const TaskList = ({tasksBody, onDeleted, onMarkComplited, stateFilter, editTask,
             if(stateFilter == 'Active') {
                 if(elem.done === false) {
                     return (
-                        <ul className="todo-list">
+                        <ul
+                        key={elem.id}
+                         className="todo-list">
                         <Task 
                         taskNewText={taskNewText}
                         onAdd = {onAdd}
@@ -55,16 +63,16 @@ const TaskList = ({tasksBody, onDeleted, onMarkComplited, stateFilter, editTask,
     })
 };
 TaskList.propTypes = {
-    tasksBody: PropTypes.shape({
+    tasksBody: PropTypes.arrayOf(PropTypes.shape({
         done: PropTypes.bool,
         id: PropTypes.number,
         taskText: PropTypes.string,
         state: PropTypes.string,
-    }),
+        })),
     onDeleted: PropTypes.func,
     onMarkComplited:PropTypes.func,
     editTask:PropTypes.func,
-    taskNewText: PropTypes.string,
+    taskNewText: PropTypes.func,
     onAdd:PropTypes.func,
 };
 TaskList.defaultProps = {

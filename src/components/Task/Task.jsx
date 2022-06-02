@@ -5,19 +5,19 @@ import PropTypes from 'prop-types'
 
 
 
-const Task = ({task, onDeleted, onMarkComplited, editTask , taskNewText }) => {
-    const [currentDate, setDate] = useState(new Date());
-    // setInterval(
-    //     setDate((currentDate) => {
-    //         return new Date()
-    // }),
-    //  1000)
+const Task = ({ task, onDeleted, onMarkComplited, editTask , taskNewText, testClass }) => {
+    
+    const [updatedTime, setDate] = useState(task.createdTime);
+
+
+    
+
     let [taskText, setText] = useState(task.taskText);
 
     const editTaskText = (e) => {
         editTask(taskText, task.id)     
         setText(taskText)
-        console.log(taskText);
+ 
     };
     const keyUpEdit = (e) => {
         if(e.keyCode == 13){
@@ -26,20 +26,20 @@ const Task = ({task, onDeleted, onMarkComplited, editTask , taskNewText }) => {
         };
     };
     return (
-        <li key={task.id} className={task.done ? 'completed' : task.state}>
+         <li className={task.done ? 'completed' : task.state}>  
             <div className="view">
-            <input 
-            onClick={() => onMarkComplited(task.id)}
+  
+             <input 
+             checked = {task.done ? true : false}
+             onChange={() => onMarkComplited(task.id)}
             className="toggle" 
             type="checkbox"></input>
             <label>
                 <span className="description">{task.taskText}</span>
                 <span className="created">{`created
                 ${ 
-                    formatDistanceToNow(
-                        currentDate,
-                        {includeSeconds: true})
-                 } ago`}
+                    formatDistanceToNow(updatedTime, {includeSeconds: true})
+                } ago`}
                  </span>
             </label>
             <button 
@@ -67,10 +67,10 @@ Task.propTypes = {
         id: PropTypes.number,
         taskText: PropTypes.string,
         state: PropTypes.string,
-    }),
+        }),
     onDeleted: PropTypes.func,
     onMarkComplited:PropTypes.func,
     editTask:PropTypes.func,
-    taskNewText: PropTypes.string
+    taskNewText: PropTypes.func
 };
 export default Task
