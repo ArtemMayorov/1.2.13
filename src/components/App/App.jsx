@@ -65,6 +65,7 @@ const App = () => {
 
   const addItem = (text) => {
     changeTask((tasks) => {
+      if (text.trim() === '') return tasks;
       const newTask = [createItem(text)];
       const newTask2 = [...newTask, ...tasks];
       return newTask2;
