@@ -1,6 +1,6 @@
 import React from 'react';
 // eslint-disable-next-line import/order
-import { createRoot } from 'react-dom/client';
+import { createRoo } from 'react-dom/client';
 import App from './components/App/App';
 
 const container = document.getElementById('root');
