@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { v4 as uuid } from 'uuid';
 
 import '../../index.css';
 import TaskList from '../../components/TaskList/TaskList.jsx';
@@ -6,12 +7,11 @@ import Footer from '../../components/footer/footer.jsx';
 import NewTaskForm from '../../components/NewTaskForm/NewTaskForm.jsx';
 
 const App = () => {
-  let maxId = Math.floor(Math.random() * 1000);
   const createItem = (text) => {
     return {
       createdTime: new Date(),
       done: false,
-      id: maxId++,
+      id: parseInt(uuid(), 16),
       taskText: text,
       state: 'view',
     };
@@ -22,37 +22,9 @@ const App = () => {
     createItem('task 3'),
     createItem('task 4'),
   ]);
-
-  let [stateFilter, setStateFilter] = useState('All');
-  let [currentTaskList, setTaskList] = useState(tasks);
-
-  useEffect(() => {
-    setTaskList(tasks);
-  }, [tasks]);
-
-  const filterToggle = (e) => {
-    const filterChildren = [...e.currentTarget.children];
-    filterChildren.map((el) => {
-      return (el.firstElementChild.className = '');
-    });
-
-    e.target.classList.toggle('selected');
-  };
-
-  const setFilter = (e) => {
-    const evenContent = e.target.textContent;
-    if (evenContent === 'All') {
-      setTaskList(tasks);
-      setStateFilter('All');
-    } else if (evenContent === 'Active') {
-      let newTasks = [...tasks].filter((el) => el.done === false);
-      setTaskList(newTasks);
-      setStateFilter('Active');
-    } else if (evenContent === 'Completed') {
-      let newTasks = [...tasks].filter((el) => el.done === true);
-      setTaskList(newTasks);
-      setStateFilter('Completed');
-    }
+  let [activeFilter, setActiveFilter] = useState('All');
+  const setFilter = (filter) => {
+    setActiveFilter(filter);
   };
 
   const deleteItem = (id) => {
@@ -78,7 +50,6 @@ const App = () => {
       const oldItem = tasks[idx];
       const newTask = { ...oldItem, done: !oldItem.done };
       const newTasks = [...tasks.slice(0, idx), newTask, ...tasks.slice(idx + 1)];
-
       return newTasks;
     });
   };
@@ -87,16 +58,6 @@ const App = () => {
     changeTask((tasks) => {
       const newTasks = tasks.filter((el) => el.done !== true);
       return newTasks;
-    });
-  };
-
-  const editTask = (taskText, id) => {
-    changeTask((tasks) => {
-      const idx = tasks.findIndex((el) => el.id === id);
-      const oldItem = tasks[idx];
-      const newTask = { ...oldItem, taskText: taskText, state: 'editing' };
-      const newTasks = [...tasks.slice(0, idx), newTask, ...tasks.slice(idx + 1)];
-      return newTask.done ? tasks : newTasks;
     });
   };
 
@@ -117,22 +78,16 @@ const App = () => {
       <header className="header">
         <h1>todos</h1>
       </header>
-      <NewTaskForm onAdd={addItem} setStateFilter={setStateFilter} />
+      <NewTaskForm onAdd={addItem} setStateFilter={setActiveFilter} />
       <TaskList
         onAdd={addItem}
-        editTask={editTask}
         taskNewText={taskNewText}
-        stateFilter={stateFilter}
-        tasksBody={currentTaskList}
+        stateFilter={activeFilter}
+        tasks={tasks}
         onDeleted={deleteItem}
         onMarkComplited={onMarkComplited}
       />
-      <Footer
-        clearCompleted={clearCompleted}
-        taskCounter={taskCounter}
-        setFilter={setFilter}
-        filterToggle={filterToggle}
-      />
+      <Footer clearCompleted={clearCompleted} taskCounter={taskCounter} setFilter={setFilter} />
     </section>
   );
 };

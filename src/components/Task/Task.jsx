@@ -2,21 +2,30 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { formatDistanceToNow } from 'date-fns';
 
-const Task = ({ task, onDeleted, onMarkComplited, editTask, taskNewText }) => {
+const Task = ({ task, onDeleted, onMarkComplited }) => {
   let [taskText, setText] = useState(task.taskText);
+  let [editStatus, setEditStatus] = useState(false);
 
   const editTaskText = () => {
-    editTask(taskText, task.id);
+    setEditStatus(true);
     setText(taskText);
   };
   const keyUpEdit = (e) => {
     if (e.keyCode == 13) {
       e.preventDefault();
-      taskNewText(taskText, task.id);
+      if (taskText.trim() === '') return;
+      setEditStatus(false);
     }
   };
+  let classNames = '';
+  if (task.done) {
+    classNames += ' completed';
+  }
+  if (editStatus) {
+    classNames += ' editing';
+  }
   return (
-    <li className={task.done ? 'completed' : task.state}>
+    <li className={classNames}>
       <div className="view">
         <input
           checked={task.done ? true : false}
@@ -25,7 +34,7 @@ const Task = ({ task, onDeleted, onMarkComplited, editTask, taskNewText }) => {
           type="checkbox"
         ></input>
         <label>
-          <span className="description">{task.taskText}</span>
+          <span className="description">{taskText}</span>
           <span className="created">
             Created {` ${formatDistanceToNow(task.createdTime, { includeSeconds: true })}`} ago{' '}
           </span>
@@ -33,7 +42,7 @@ const Task = ({ task, onDeleted, onMarkComplited, editTask, taskNewText }) => {
         <button onClick={editTaskText} className="icon icon-edit"></button>
         <button className="icon icon-destroy" onClick={onDeleted}></button>
       </div>
-      {task.state === 'editing' ? (
+      {editStatus ? (
         <input
           type="text"
           className="edit"
@@ -41,9 +50,7 @@ const Task = ({ task, onDeleted, onMarkComplited, editTask, taskNewText }) => {
           onChange={(e) => setText(e.target.value)}
           value={taskText}
         ></input>
-      ) : (
-        ''
-      )}
+      ) : null}
     </li>
   );
 };

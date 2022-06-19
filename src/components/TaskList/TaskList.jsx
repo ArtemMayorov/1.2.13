@@ -3,65 +3,36 @@ import PropTypes from 'prop-types';
 
 import Task from '../Task/Task.jsx';
 
-const TaskList = ({ tasksBody, onDeleted, onMarkComplited, stateFilter, editTask, onAdd, taskNewText }) => {
-  return tasksBody.map((elem) => {
-    if (stateFilter === 'Completed') {
-      if (elem.done === true) {
-        return (
-          <ul key={elem.id} className="todo-list">
-            <Task
-              onAdd={onAdd}
-              taskNewText={taskNewText}
-              editTask={editTask}
-              onMarkComplited={onMarkComplited}
-              onDeleted={() => onDeleted(elem.id)}
-              task={elem}
-            />
-          </ul>
-        );
-      }
-    }
-    if (stateFilter == 'All') {
-      return (
-        <ul key={elem.id} className="todo-list">
-          <Task
-            taskNewText={taskNewText}
-            onAdd={onAdd}
-            editTask={editTask}
-            onMarkComplited={onMarkComplited}
-            onDeleted={() => onDeleted(elem.id)}
-            task={elem}
-          />
-        </ul>
-      );
-    }
-    if (stateFilter == 'Active') {
-      if (elem.done === false) {
-        return (
-          <ul key={elem.id} className="todo-list">
-            <Task
-              taskNewText={taskNewText}
-              onAdd={onAdd}
-              editTask={editTask}
-              onMarkComplited={onMarkComplited}
-              onDeleted={() => onDeleted(elem.id)}
-              task={elem}
-            />
-          </ul>
-        );
-      }
-    }
+const TaskList = ({ tasks, onDeleted, onMarkComplited, stateFilter, onAdd, taskNewText }) => {
+  let tasksList = [...tasks];
+  if (stateFilter === 'Active') {
+    tasksList = [...tasks].filter((el) => el.done === false);
+  }
+  if (stateFilter === 'Completed') {
+    tasksList = [...tasks].filter((el) => el.done === true);
+  }
+  return tasksList.map((elem) => {
+    return (
+      <ul key={elem.id} className="todo-list">
+        <Task
+          onAdd={onAdd}
+          taskNewText={taskNewText}
+          onMarkComplited={onMarkComplited}
+          onDeleted={() => onDeleted(elem.id)}
+          task={elem}
+        />
+      </ul>
+    );
   });
 };
 TaskList.propTypes = {
-  tasksBody: PropTypes.arrayOf(
-    PropTypes.shape({
-      done: PropTypes.bool,
-      id: PropTypes.number,
-      taskText: PropTypes.string,
-      state: PropTypes.string,
-    })
-  ),
+  task: PropTypes.shape({
+    description: PropTypes.string,
+    done: PropTypes.bool,
+    isVisible: PropTypes.bool,
+    created: PropTypes.shape(),
+    id: PropTypes.number,
+  }),
   onDeleted: PropTypes.func,
   onMarkComplited: PropTypes.func,
   editTask: PropTypes.func,
