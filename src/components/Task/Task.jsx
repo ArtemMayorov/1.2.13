@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { formatDistanceToNow } from 'date-fns';
 
-const Task = ({ task, onDeleted, onMarkComplited }) => {
+import './Task.css';
+import Timer from '../Timer/Timer';
+const Task = ({ task, task: { minutes, id }, onDeleted, onMarkComplited, updateTimer }) => {
   let [taskText, setText] = useState(task.taskText);
   let [editStatus, setEditStatus] = useState(false);
 
@@ -29,12 +31,15 @@ const Task = ({ task, onDeleted, onMarkComplited }) => {
       <div className="view">
         <input
           checked={task.done ? true : false}
-          onChange={() => onMarkComplited(task.id)}
+          onChange={() => onMarkComplited(id)}
           className="toggle"
           type="checkbox"
         ></input>
         <label>
-          <span className="description">{taskText}</span>
+          <span className="title">{taskText}</span>
+          <span className="description">
+            <Timer updateTimer={updateTimer} id={id} userMinutes={minutes} />
+          </span>
           <span className="created">
             Created {` ${formatDistanceToNow(task.createdTime, { includeSeconds: true })}`} ago{' '}
           </span>

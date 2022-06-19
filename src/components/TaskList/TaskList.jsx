@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Task from '../Task/Task.jsx';
 
-const TaskList = ({ tasks, onDeleted, onMarkComplited, stateFilter, onAdd, taskNewText }) => {
+const TaskList = ({ tasks, onDeleted, onMarkComplited, stateFilter, onAdd, taskNewText, updateTimer }) => {
   let tasksList = [...tasks];
   if (stateFilter === 'Active') {
     tasksList = [...tasks].filter((el) => el.done === false);
@@ -15,6 +15,7 @@ const TaskList = ({ tasks, onDeleted, onMarkComplited, stateFilter, onAdd, taskN
     return (
       <ul key={elem.id} className="todo-list">
         <Task
+          updateTimer={updateTimer}
           onAdd={onAdd}
           taskNewText={taskNewText}
           onMarkComplited={onMarkComplited}

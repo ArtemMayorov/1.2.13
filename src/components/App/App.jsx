@@ -7,13 +7,14 @@ import Footer from '../../components/footer/footer.jsx';
 import NewTaskForm from '../../components/NewTaskForm/NewTaskForm.jsx';
 
 const App = () => {
-  const createItem = (text) => {
+  const createItem = (text, minutes = 120) => {
     return {
       createdTime: new Date(),
       done: false,
       id: parseInt(uuid(), 16),
       taskText: text,
       state: 'view',
+      minutes: minutes,
     };
   };
   const [tasks, changeTask] = useState([
@@ -23,6 +24,16 @@ const App = () => {
     createItem('task 4'),
   ]);
   let [activeFilter, setActiveFilter] = useState('All');
+
+  const updateTimer = (id, second) => {
+    changeTask((tasks) => {
+      const idx = tasks.findIndex((el) => el.id === id);
+      const oldItem = tasks[idx];
+      const newTask = { ...oldItem, minutes: second };
+      const newTasks = [...tasks.slice(0, idx), newTask, ...tasks.slice(idx + 1)];
+      return newTasks;
+    });
+  };
   const setFilter = (filter) => {
     setActiveFilter(filter);
   };
@@ -35,10 +46,10 @@ const App = () => {
     });
   };
 
-  const addItem = (text) => {
+  const addItem = (text, minutes) => {
     changeTask((tasks) => {
       if (text.trim() === '') return tasks;
-      const newTask = [createItem(text)];
+      const newTask = [createItem(text, minutes)];
       const newTask2 = [...newTask, ...tasks];
       return newTask2;
     });
@@ -72,7 +83,6 @@ const App = () => {
   };
 
   const taskCounter = tasks.filter((el) => el.state !== 'completed' && el.done !== true).length;
-
   return (
     <section className="todoapp">
       <header className="header">
@@ -80,6 +90,7 @@ const App = () => {
       </header>
       <NewTaskForm onAdd={addItem} setStateFilter={setActiveFilter} />
       <TaskList
+        updateTimer={updateTimer}
         onAdd={addItem}
         taskNewText={taskNewText}
         stateFilter={activeFilter}
